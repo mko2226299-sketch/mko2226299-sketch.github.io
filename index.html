@@ -3,82 +3,765 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이수비 포트폴리오</title>
+    <title>이수비 | Designer Portfolio</title>
     <style>
+        /* ===== 기본 스타일 리셋 ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        /* ===== 레트로 빈티지 색상 변수 ===== */
+        :root {
+            --primary: #D84315;    /* 진한 오렌지 레드 */
+            --secondary: #F57C00;  /* 오렌지 */
+            --accent: #FFA726;     /* 밝은 오렌지 */
+            --light: #FFE0B2;      /* 연한 피치 */
+            --dark: #4E342E;       /* 다크 브라운 */
+            --text: #3E2723;       /* 텍스트 브라운 */
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Courier New', monospace;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== 고정 네비게이션 (왼쪽) ===== */
+        .nav-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 40px 20px;
+            z-index: 1000;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+        }
+
+        .nav-logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--light);
+            margin-bottom: 50px;
+            text-align: center;
+            text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-bottom: 20px;
+        }
+
+        .nav-menu a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            display: block;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+        }
+
+        .nav-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(10px) scale(1.05);
+            animation: retroBounce 0.6s ease;
+        }
+
+        /* ===== 레트로 스프링 애니메이션 ===== */
+        @keyframes retroBounce {
+            0%, 100% { transform: translateX(10px) scale(1.05); }
+            25% { transform: translateX(15px) scale(1.1) rotate(-2deg); }
+            50% { transform: translateX(5px) scale(1.08) rotate(2deg); }
+            75% { transform: translateX(12px) scale(1.06) rotate(-1deg); }
+        }
+
+        /* ===== 모바일 토글 버튼 ===== */
+        .nav-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: var(--primary);
+            color: var(--light);
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+        }
+
+        /* ===== 메인 컨텐츠 영역 ===== */
+        .main-content {
+            margin-left: 250px;
+            padding: 0;
+        }
+
+        /* ===== 공통 섹션 스타일 ===== */
+        section {
             min-height: 100vh;
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 40px;
+            text-shadow: 4px 4px 0px var(--accent);
+            animation: titleBounce 1s ease;
+        }
+
+        @keyframes titleBounce {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* ===== 히어로 섹션 ===== */
+        #hero {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--light) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--secondary);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        .hero-name {
+            font-size: 72px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-shadow: 5px 5px 0px var(--secondary);
+            animation: retroBounce 1.2s ease;
+        }
+
+        .hero-title {
+            font-size: 36px;
+            color: var(--secondary);
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+        }
+
+        .hero-description {
+            font-size: 20px;
+            color: var(--text);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--primary);
+            color: var(--light);
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 10px;
+            box-shadow: 5px 5px 0px var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0px var(--dark);
+            animation: retroBounce 0.6s ease;
+        }
+
+        /* ===== About 섹션 ===== */
+        #about {
+            background-color: var(--light);
+        }
+
+        .about-container {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 20px;
+            border: 8px solid var(--secondary);
+            box-shadow: 10px 10px 0px var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .about-image img:hover {
+            transform: rotate(-3deg) scale(1.05);
+            animation: retroBounce 0.6s ease;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text h3 {
+            font-size: 32px;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0px var(--accent);
+        }
+
+        .about-text p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* ===== Skills 섹션 ===== */
+        #skills {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            color: var(--light);
+        }
+
+        #skills .section-title {
+            color: var(--light);
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.4);
+            animation: retroBounce 0.6s ease;
+        }
+
+        .skill-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .skill-name {
+            font-size: 24px;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .skill-level {
+            font-size: 16px;
+            color: var(--text);
+        }
+
+        /* ===== Projects 섹션 ===== */
+        #projects {
+            background-color: var(--light);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 8px 8px 0px var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) rotate(-1deg);
+            box-shadow: 12px 12px 0px var(--secondary);
+            animation: retroBounce 0.6s ease;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 5px solid var(--primary);
+        }
+
+        .project-info {
+            padding: 25px;
+        }
+
+        .project-title {
+            font-size: 26px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .project-description {
+            font-size: 16px;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: var(--accent);
+            color: var(--dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* ===== Contact 섹션 ===== */
+        #contact {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--light);
+            text-align: center;
+        }
+
+        #contact .section-title {
+            color: var(--light);
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+        }
+
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateX(10px) scale(1.05);
+            animation: retroBounce 0.6s ease;
+        }
+
+        .contact-item h3 {
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .contact-item a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links {
             display: flex;
             justify-content: center;
-            align-items: center;
+            gap: 30px;
+            margin-top: 40px;
         }
 
-        .container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 80px 60px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 1s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        h1 {
-            font-size: 4em;
-            color: #333;
-            margin-bottom: 20px;
-            font-weight: 700;
-            letter-spacing: -2px;
-        }
-
-        .welcome-text {
-            font-size: 1.3em;
-            color: #666;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-        }
-
-        .profile-image {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 30px;
-            border: 5px solid white;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .divider {
+        .social-link {
             width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            margin: 30px auto;
-            border-radius: 2px;
+            height: 60px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: var(--primary);
+            text-decoration: none;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: rotate(360deg) scale(1.2);
+            animation: retroBounce 0.6s ease;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            text-align: center;
+            padding: 30px;
+            margin-left: 250px;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== 반응형 디자인 (모바일) ===== */
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .nav-sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            footer {
+                margin-left: 0;
+            }
+
+            section {
+                padding: 60px 30px;
+            }
+
+            .hero-name {
+                font-size: 48px;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .about-container {
+                flex-direction: column;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 20px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== 스크롤 애니메이션 ===== */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-animate.active {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>이수비</h1>
-        <div class="divider"></div>
-        <p class="welcome-text">포트폴리오 웹사이트에 오신 것을 환영합니다</p>
-    </div>
+    <!-- 모바일 토글 버튼 -->
+    <button class="nav-toggle" id="navToggle">☰</button>
+
+    <!-- 고정 네비게이션 -->
+    <nav class="nav-sidebar" id="navSidebar">
+        <div class="nav-logo">SUBI</div>
+        <ul class="nav-menu">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="main-content">
+        <!-- 히어로 섹션 -->
+        <section id="hero">
+            <h1 class="hero-name">이수비<br>Subi Lee</h1>
+            <h2 class="hero-title">Designer</h2>
+            <p class="hero-description">사용자의 불편함을 해결하는 디자이너입니다.</p>
+            <a href="#contact" class="cta-button">Get In Touch</a>
+        </section>
+
+        <!-- About Me 섹션 -->
+        <section id="about">
+            <h2 class="section-title scroll-animate">About Me</h2>
+            <div class="about-container scroll-animate">
+                <div class="about-image">
+                    <img src="https://via.placeholder.com/400x500/F57C00/FFFFFF?text=Subi+Lee" alt="이수비 프로필">
+                </div>
+                <div class="about-text">
+                    <h3>안녕하세요! 👋</h3>
+                    <p>저는 사용자 경험을 최우선으로 생각하는 디자이너 이수비입니다. 복잡한 문제를 단순하고 아름다운 해결책으로 바꾸는 것을 좋아합니다.</p>
+                    <p>5년간의 경력을 통해 다양한 프로젝트를 진행하며 사용자 중심의 디자인 철학을 키워왔습니다. 끊임없이 배우고 성장하며, 더 나은 사용자 경험을 만들기 위해 노력합니다.</p>
+                    <p>레트로 감성과 모던한 기능성을 결합한 디자인을 추구하며, 사용자의 불편함을 해결하는 창의적인 솔루션을 제공합니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills 섹션 -->
+        <section id="skills">
+            <h2 class="section-title scroll-animate">Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card scroll-animate">
+                    <div class="skill-icon">🎨</div>
+                    <div class="skill-name">UI/UX Design</div>
+                    <div class="skill-level">Expert Level</div>
+                </div>
+                <div class="skill-card scroll-animate">
+                    <div class="skill-icon">✏️</div>
+                    <div class="skill-name">Figma</div>
+                    <div class="skill-level">Advanced</div>
+                </div>
+                <div class="skill-card scroll-animate">
+                    <div class="skill-icon">🖼️</div>
+                    <div class="skill-name">Adobe XD</div>
+                    <div class="skill-level">Advanced</div>
+                </div>
+                <div class="skill-card scroll-animate">
+                    <div class="skill-icon">📱</div>
+                    <div class="skill-name">Prototyping</div>
+                    <div class="skill-level">Expert Level</div>
+                </div>
+                <div class="skill-card scroll-animate">
+                    <div class="skill-icon">🎭</div>
+                    <div class="skill-name">Branding</div>
+                    <div class="skill-level">Intermediate</div>
+                </div>
+                <div class="skill-card scroll-animate">
+                    <div class="skill-icon">💡</div>
+                    <div class="skill-name">Creative Thinking</div>
+                    <div class="skill-level">Expert Level</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects 섹션 -->
+        <section id="projects">
+            <h2 class="section-title scroll-animate">Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card scroll-animate">
+                    <img src="https://via.placeholder.com/400x300/D84315/FFFFFF?text=E-Commerce+App" alt="프로젝트 1" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">E-Commerce App Redesign</h3>
+                        <p class="project-description">사용자 경험을 개선한 쇼핑 앱 리디자인 프로젝트. 구매 전환율 35% 증가를 달성했습니다.</p>
+                        <div class="project-tags">
+                            <span class="tag">UI/UX</span>
+                            <span class="tag">Mobile</span>
+                            <span class="tag">Figma</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card scroll-animate">
+                    <img src="https://via.placeholder.com/400x300/F57C00/FFFFFF?text=Banking+Dashboard" alt="프로젝트 2" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">Banking Dashboard</h3>
+                        <p class="project-description">복잡한 금융 데이터를 직관적으로 시각화한 대시보드 디자인. 사용자 만족도 4.8/5.0 달성.</p>
+                        <div class="project-tags">
+                            <span class="tag">Dashboard</span>
+                            <span class="tag">Web</span>
+                            <span class="tag">Data Viz</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card scroll-animate">
+                    <img src="https://via.placeholder.com/400x300/FFA726/FFFFFF?text=Fitness+Tracker" alt="프로젝트 3" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">Fitness Tracker App</h3>
+                        <p class="project-description">사용자의 운동 습관을 개선하는 헬스 트래킹 앱. 일일 활성 사용자 10만+ 달성.</p>
+                        <div class="project-tags">
+                            <span class="tag">Health</span>
+                            <span class="tag">iOS</span>
+                            <span class="tag">Animation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card scroll-animate">
+                    <img src="https://via.placeholder.com/400x300/FFE0B2/D84315?text=Brand+Identity" alt="프로젝트 4" class="project-image">
+                    <div class="project-info">
+                        <h3 class="project-title">Coffee Shop Branding</h3>
+                        <p class="project-description">로컬 커피숍의 브랜드 아이덴티티 구축. 레트로 감성과 현대적 감각의 조화.</p>
+                        <div class="project-tags">
+                            <span class="tag">Branding</span>
+                            <span class="tag">Logo</span>
+                            <span class="tag">Print</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact 섹션 -->
+        <section id="contact">
+            <h2 class="section-title scroll-animate">Contact</h2>
+            <div class="contact-info scroll-animate">
+                <div class="contact-item">
+                    <h3>Email</h3>
+                    <a href="mailto:subi.lee@example.com">subi.lee@example.com</a>
+                </div>
+                <div class="contact-item">
+                    <h3>Phone</h3>
+                    <a href="tel:+821012345678">+82 10-1234-5678</a>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-link" title="LinkedIn">💼</a>
+                    <a href="#" class="social-link" title="Behance">🎨</a>
+                    <a href="#" class="social-link" title="Instagram">📷</a>
+                    <a href="#" class="social-link" title="GitHub">💻</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 이수비. Powered by <a href="https://ai.triz.kr" target="_blank">AI Portfolio Workshop</a>.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // ===== 모바일 네비게이션 토글 =====
+        const navToggle = document.getElementById('navToggle');
+        const navSidebar = document.getElementById('navSidebar');
+        const navLinks = document.querySelectorAll('.nav-menu a');
+
+        navToggle.addEventListener('click', () => {
+            navSidebar.classList.toggle('active');
+        });
+
+        // 네비게이션 링크 클릭 시 메뉴 닫기 (모바일)
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navSidebar.classList.remove('active');
+            });
+        });
+
+        // ===== 부드러운 스크롤 =====
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // ===== 스크롤 애니메이션 =====
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        // 모든 scroll-animate 클래스를 가진 요소 관찰
+        document.querySelectorAll('.scroll-animate').forEach(element => {
+            observer.observe(element);
+        });
+
+        // ===== 현재 섹션 하이라이트 =====
+        const sections = document.querySelectorAll('section');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.backgroundColor = '';
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
